@@ -1,0 +1,110 @@
+body{
+    display: flex;
+    flex-direction: column;
+    background-image: url(images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    color: white;
+}
+
+.upperbox{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lowerbox{
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+#resultImage{
+    width: 250px;
+    height: 250px;
+}
+
+button img{
+    height: 100px;
+    padding: 2px;
+}
+
+button{
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 60px;
+    border: 3px solid rgb(59, 59, 59);
+    box-shadow: 0 10px 10px gray;
+}
+
+button:active {
+    transform: translateY(2px);
+    background: rgb(135, 134, 134);
+    
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.resetbtn{
+    
+    font-size: larger;
+    font-weight: 700;
+    padding: 10px 50px;
+}
+
+.reset:active{
+    background: rgb(135, 134, 134);
+}
+
+.gameZone p{
+    font-weight: 700;
+    font-size: larger;
+}
+.instructionPanel{
+    width: 25%;
+    height: fit-content;
+    text-align: center;
+    border: 2px solid white;
+    box-shadow: 0px 0px 15px gray;
+    
+}
+
+.gameZone{
+    text-align: center;
+    
+}
+
+
+.resultwindow{
+    text-align: center;
+    height: fit-content;
+    border: 2px solid white;
+    box-shadow: 0px 0px 30px gray;
+}
+
+.resultwindow p{
+    font-size: large;
+    font-weight: 700;
+}
+
+.pop{
+    animation: pop 0.4s;
+}
+
+@keyframes pop{
+    0%{
+        transform: scale(0.8);
+    }
+
+    50%{
+        transform: scale(1.2);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}

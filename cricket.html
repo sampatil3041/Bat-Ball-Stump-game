@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cricket game</title>
+    <link rel="stylesheet" href="cricket.css">
+</head>
+<body >
+    <div class="upperbox">
+        <div class="instructionPanel">
+            <h1>Instructions regarding Game</h1>
+            <h3>1] Choose Bat, Ball, or Stump.</h3>
+            <h3>2] The computer makes a random choice.</h3>
+            <h3>3]Bat beats Ball, Ball beats Stump, and Stump beats Bat.</h3>
+            <h3>4]Same choices result in a tie.</h3>
+        </div>
+    
+    
+        <div class="gameZone">
+            <h1>Bat Ball Stump cricket game</h1>
+    
+            <button onclick="
+                userChoice = 'Bat';
+                randomChoiceGenerator();
+                resultLogic();
+                result();
+            "><img src="images/bat.png" alt=""></button>
+    
+            <button onclick="
+                userChoice = 'Ball';
+                randomChoiceGenerator();
+                resultLogic();
+                result();
+            "><img src="images/ball.png" alt=""></button>
+    
+            <button onclick="
+                userChoice = 'Stump';
+                randomChoiceGenerator();
+                resultLogic();
+                result();
+            "><img src="images/stumps.png" alt=""></button>
+    
+            <p id="userMsg"></p>
+    
+            <p id="computerMsg"></p>
+    
+            <p id="resultComment"></p>
+    
+    
+    
+            <button class="resetbtn" onclick="
+            localStorage.clear();
+            score = {
+                        Win:0 ,
+                        Lost:0 ,
+                        Tie:0 ,
+                    };
+            result();
+            ">Reset</button>
+    
+        </div>
+    
+        <div class="resultwindow">
+            <H1>SCORE CARD</H1>
+            <p>🏆WIN:<span id="winscore"></span></p>
+            <p>❌LOST:<span id="lostscore"></span></p>
+            <p>🤝TIE:<span id="tiescore"></span></p>
+        </div>
+    </div>
+
+    <div class="lowerbox">
+        <div class="resultimgshower">
+            <img id="resultImage" src="" alt="">
+        </div>
+    </div>
+
+
+
+
+    <script>
+        let userChoice;
+        let scoreCard = localStorage.getItem('score');
+        let scoreStr = JSON.parse(scoreCard);
+        let score = scoreStr || {
+                Win:0 ,
+                Lost:0 ,
+                Tie:0 ,
+            };
+        
+        
+
+
+        let computerChoice;
+        function randomChoiceGenerator(){
+            let randomNumber = Math.random() * 3;
+            if(randomNumber<1){
+                return computerChoice = 'Bat';
+            }else if(randomNumber < 2){
+                return computerChoice = 'Ball';
+            }else{
+                return computerChoice = 'Stump';
+            }
+        }
+
+        let resultMsg;
+        function resultLogic(){
+            if(computerChoice === userChoice){
+                score.Tie++;
+                return resultMsg = `It's a Tie`;
+            }else{
+                if(userChoice === 'Bat'){
+                    if(computerChoice ==='Ball'){
+                        score.Win++;
+                        return resultMsg = 'User won';
+                    }else{
+                        score.Lost++;
+                        return resultMsg = 'Computer won';
+                    }
+                }else if(userChoice === 'Ball'){
+                    if(computerChoice === 'Bat'){
+                        score.Lost++;
+                        return resultMsg = 'Computer won';
+                    }else{
+                        score.Win++;
+                        return resultMsg = 'User won';
+                    }
+                }else{
+                    if(computerChoice === 'Bat'){
+                        score.Win++;
+                        return resultMsg = 'User won';
+                    }else{
+                        score.Lost++;
+                        return resultMsg = 'Computer won';
+                    }
+                }
+            }
+        }
+
+        function resultimg(){
+
+            let resultImage = document.querySelector('#resultImage');
+
+            if(resultMsg === undefined){
+                resultImage.style.display = 'none';
+                return;
+            }
+
+            resultImage.style.display = 'block';
+
+            if(resultMsg === 'User won'){
+                resultImage.src = 'images/trophy-win.png';
+            }
+            else if(resultMsg === 'Computer won'){
+                resultImage.src = 'images/lost-img.png';
+            }
+            else{
+                resultImage.src = 'images/tie-img.png';
+            }
+            resultImage.classList.remove('pop');
+            void resultImage.offsetWidth;
+            resultImage.classList.add('pop');
+        }
+
+        function result(){
+            localStorage.setItem('score',JSON.stringify(score));
+            document.querySelector('#userMsg').innerText = `You have chosen ${userChoice}`;
+            document.querySelector('#computerMsg').innerText = `Computer have chosen ${computerChoice}`;
+            document.querySelector('#resultComment').innerText = `${resultMsg}`;
+            resultimg();
+            
+            document.querySelector('#winscore').innerText = `${score.Win}`;
+            document.querySelector('#lostscore').innerText = `${score.Lost}`;
+            document.querySelector('#tiescore').innerText = `${score.Tie}`;
+            
+        }
+
+        resultimg();
+
+        result();
+
+    </script>
+    
+</body>
+</html>
